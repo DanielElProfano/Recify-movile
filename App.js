@@ -30,7 +30,7 @@ const App = () => {
 
   return (
     <UserState>
-      <NavigationContainer>
+      <NavigationContainer >
         <LoginStack />
       </NavigationContainer>
     </UserState>

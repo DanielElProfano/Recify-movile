@@ -2,7 +2,6 @@ import React, { useReducer, } from "react";
 import UserReducer from './UserReducer.js'
 import UserContext from "./UserContext.js";
 import { loginService } from '../../services/userService'
-import { View, Text } from "react-native";
 
 const UserState = (props) => {
 
@@ -15,8 +14,6 @@ const UserState = (props) => {
   const [state, dispatch] = useReducer(UserReducer, initialState)
 
   const loginUser = async (email, password) => {
-    // const email = 'arriba@abajo.com'
-    // const password = 'arriba'
     const data = await loginService({ email, password })
     dispatch({
       type: 'LOGIN_USER',
@@ -26,14 +23,8 @@ const UserState = (props) => {
   }
 
   const getUser = () => {
-    console.log("getUser")
-    dispatch({
-      type: 'GET_USER',
-      payload: ''
-    })
-    return state
+    return state.body
   }
-
 
   return (
     <UserContext.Provider value={
