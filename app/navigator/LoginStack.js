@@ -1,18 +1,26 @@
 import React from "react"
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import LoginScreen from "../screens/LoginScreen"
+import RegisterScreen from "../screens/RegisterScreen"
 import TabNavigator from "./TabNavigator"
 
 
 const Stack = createNativeStackNavigator()
 
+const globalScreenOptions = {
+  headerStyle: { backgroundColor: '#2C6BED' },
+  headerTitleStyle: { color: 'white' },
+  headerTintColor: 'white'
+}
+
 export default function LoginStack() {
   return (
-    <Stack.Navigator initialRouteName='LoginScreen'
+    <Stack.Navigator
+      initialRouteName='LoginScreen'
 
-      screenOptions={{
-        headerShown: false
-      }}>
+      screenOptions={
+        globalScreenOptions
+      }>
       <Stack.Screen
         name="LoginScreen"
         component={LoginScreen}
@@ -21,7 +29,11 @@ export default function LoginStack() {
         name="Wall"
         component={TabNavigator}
       />
-    </Stack.Navigator>
+      <Stack.Screen
+        name="RegisterScreen"
+        component={RegisterScreen}
+      />
+    </Stack.Navigator >
   )
 }
 
