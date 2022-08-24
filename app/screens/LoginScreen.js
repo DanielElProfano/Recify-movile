@@ -6,22 +6,22 @@ import {
   View,
   StyleSheet,
   KeyboardAvoidingView,
+  TextInput,
+  Button
 } from 'react-native'
-import { Button, Input, Image } from '@rneui/base';
 
 export default function LoginScreen({ navigation }) {
 
   const { loginUser } = useContext(UserContext)
-  const [text, onChangeText] = useState();
-  const [number, onChangeNumber] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
 
   const onPressLoginButton = async () => {
-    const data = await loginUser('arriba@abajo.com', 'arriba')
-    if (!data.error) {
+    const data = await loginUser("arriba@abajo.com", "arriba")
+    if (!data.state.error) {
       navigation.navigate('Wall')
     }
   }
-
 
   return (
     <KeyboardAvoidingView behavior='height' >
@@ -30,21 +30,20 @@ export default function LoginScreen({ navigation }) {
           Recify
         </Text>
         <View style={styles.input}>
-          <Input
-            onChangeText={onChangeText}
-            value={text}
+          <TextInput
+            onChangeText={(text) => setEmail(text)}
+            value={email}
             type='email'
             placeholder='email'
           />
-          <Input
+          <TextInput
             style={styles.input}
-            onChangeText={onChangeNumber}
-            value={number}
+            onChangeText={(text) => setPassword(text)}
+            value={password}
             placeholder='password'
             secureTextEntry={true}
           />
         </View>
-
         <View style={styles.buttonStyle}>
           <Button
             onPress={onPressLoginButton}
@@ -68,7 +67,6 @@ const styles = StyleSheet.create({
     fontSize: 30
   },
   container: {
-
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
@@ -82,6 +80,4 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: 200,
   },
-
-
 });

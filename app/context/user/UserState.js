@@ -15,6 +15,7 @@ const UserState = (props) => {
 
   const loginUser = async (email, password) => {
     const data = await loginService({ email, password })
+    console.log("response", data)
     dispatch({
       type: 'LOGIN_USER',
       payload: data
@@ -23,7 +24,10 @@ const UserState = (props) => {
   }
 
   const getUser = () => {
-    return state.body
+    return state
+  }
+  const getUserToken = () => {
+    return state
   }
 
   return (
@@ -31,9 +35,10 @@ const UserState = (props) => {
       {
         error: state.error,
         statusCode: state.statusCode,
-        body: state.body,
+        token: state.body,
         loginUser,
         getUser,
+        getUserToken
       }
     }>
       {props.children}

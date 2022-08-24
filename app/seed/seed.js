@@ -1,11 +1,11 @@
 export const seed = [
   {
     userId: '1',
-    name: 'daniel González',
+    name: 'Daniel González',
     postId: '1',
     title: 'First post',
     photo: 'https://images.freeimages.com/images/large-previews/da0/diwali-1179941.jpg',
-    comment: 'Es es el comentartio del user',
+    comment: 'Es es el comentartio del userasdfsafgsdgh sdghdfhsdhg',
     createdAT: '',
     updatedAt: '',
     likes: 20,
@@ -15,7 +15,7 @@ export const seed = [
         user: '2',
         postId: '1',
         likes: 10,
-        comment: 'comentario del user 2 sobre el post del user 1'
+        comment: 'comentario del user 2 sobre el post del user 1 lñksadfñljkasdf'
       },
       {
         commentId: '2',
@@ -28,7 +28,7 @@ export const seed = [
   },
   {
     userId: '2',
-    name: 'Vero',
+    name: 'Veronica Iniesta',
     postId: '2',
     title: 'Second post',
     photo: 'https://images.freeimages.com/images/large-previews/da0/diwali-1179941.jpg',
