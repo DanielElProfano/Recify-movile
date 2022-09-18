@@ -16,11 +16,10 @@ const PostState = (props) => {
 
   const getPost = async () => {
     try {
-      console.log("data", data)
       const data = await getAllPost()
       const { body, status, error } = data
       if (!error) {
-        console.log("hola")
+        console.log("hola", body)
         const orderArray = body.forEach(element => {
           console.log("element", element)
         });

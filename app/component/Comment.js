@@ -1,18 +1,23 @@
-import React, { useContext } from "react"
-import { View, Text, StyleSheet, Image } from "react-native"
+import React, { useContext, useState } from "react"
+import { View, Text, StyleSheet, Image, FlatList } from "react-native"
 import PostContext from "../context/post/PostContext"
 import UserContext from "../context/user/UserContext"
 import { createId } from "../utils/uuid"
 
 const Comment = ({ commentary }) => {
+  const [showMore, setShowMore] = useState(false)
   const {
     name,
     comment,
     likes,
     photo,
     commentId,
-    postId
+    comments,
+    postId,
+    level
   } = commentary.item
+
+  console.log("commentary", commentary.item)
 
   const { addComment } = useContext(PostContext)
 
@@ -20,10 +25,15 @@ const Comment = ({ commentary }) => {
 
   const responseToComment = async () => {
     const user = getUser()
-    const { token, userId } = user.state.body
-    console.log(token, userId)
+    const { token, userId, level } = user.state.body
+    console.log("response comment---", token, userId, level)
     const id = await createId()
-    const data = await addComment(token, userId, "test Comment", postId, id, commentId)
+    // const data = await addComment(token, userId, "test Comment", postId, id, commentId)
+  }
+
+  const showComments = () => {
+    console.log("showComments")
+    setShowMore(true)
   }
 
   const addLike = () => {
@@ -43,7 +53,20 @@ const Comment = ({ commentary }) => {
         <View style={styles.options_container}>
           <Text style={styles.options} onPress={addLike}>I like it!</Text>
           <Text style={styles.options} onPress={responseToComment}>Answer</Text>
+          {comments.length !== 0 &&
+            <Text Style={styles.options} onPress={showComments}>More comments...</Text>
+          }
         </View>
+        {showMore &&
+          <View >
+            <FlatList
+              data={comments}
+              keyExtractor={comment => comment.commentId}
+              renderItem={item => <Comment commentary={item} />}
+              extraData={comments}
+            />
+          </View>
+        }
       </View>
       {likes && <Text>likes:{likes}</Text>}
     </>
@@ -52,7 +75,8 @@ const Comment = ({ commentary }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 10
+    marginBottom: 10,
+    display: "flex"
   },
   comment_container: {
     flexDirection: 'row',

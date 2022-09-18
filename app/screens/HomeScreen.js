@@ -10,6 +10,7 @@ export default function HomeScreen({ navigation, route }) {
 
 
   const [post, setPost] = useState([])
+
   const addPost = () => {
     console.log("add a Post")
   }
@@ -17,23 +18,32 @@ export default function HomeScreen({ navigation, route }) {
   const { getUserToken } = useContext(UserContext)
 
   const arrayToOrder = (array) => {
-    console.log("hola", array)
-
     array.forEach(element => {
-      console.log(element)
       if (element.comments.length) {
-        const arrayOfResponseToComments = element.comments.filter(comment => comment.res_to_commentId)
-        console.log("comments", arrayOfResponseToComments)
-        element.comments.forEach((comment) => {
-          arrayOfResponseToComments.forEach(commentResponse => {
-            if (comment.commentId === commentResponse.res_to_commentId) {
-              comment.moreComments = [...commentResponse]
+        const moreComments = []
+        const arrayOfResponseToComments = element.comments.filter(comment => {
+          if (comment.res_to_commentId) {
+
+            return comment.res_to_commentId
+          }
+        })
+        console.log("response to", arrayOfResponseToComments)
+        arrayOfResponseToComments.forEach(commentResponse => {
+          element.comments.forEach((comment, index) => {
+            const id = comment.commentId
+            const responseToId = commentResponse.res_to_commentId
+            if (id === responseToId) {
+              moreComments.push({ ...commentResponse })
+              comment.moreComments = moreComments
+            }
+            if (comment.commentId === commentResponse.commentId) {
+              element.comments.splice(index, 1)
             }
           })
         })
       }
-      console.log("Array", element)
     })
+    return array
   }
 
   useEffect(() => {
@@ -41,8 +51,8 @@ export default function HomeScreen({ navigation, route }) {
       const user = getUserToken()
       const data = await getAllPost(user.state.body.token)
       const { error, body, status } = data
-      console.log("data", data)
-      const newArray = arrayToOrder(body)
+      console.log("data", body)
+      // const newArray = arrayToOrder(body)
       setPost(body)
     }
     getThePosts()

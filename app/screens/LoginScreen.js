@@ -18,7 +18,8 @@ export default function LoginScreen({ navigation }) {
 
   const onPressLoginButton = async () => {
     const data = await loginUser("arriba@abajo.com", "arriba")
-    if (!data.state.error) {
+    console.log("data login", data)
+    if (!data.error) {
       navigation.navigate('Wall')
     }
   }

@@ -24,6 +24,7 @@ export const getAllPost = async (token) => {
     })
     const response = await request.json()
     return response
+
   } catch {
     (error = () => {
       console.log(response.error)

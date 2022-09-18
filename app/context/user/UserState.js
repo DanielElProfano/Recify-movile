@@ -20,7 +20,7 @@ const UserState = (props) => {
       type: 'LOGIN_USER',
       payload: data
     })
-    return state
+    return data
   }
 
   const getUser = () => {
